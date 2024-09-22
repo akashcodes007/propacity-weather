@@ -4,14 +4,11 @@
 
 - [Overview](#overview)
 - [Built with](#built-with)
-- [Screenshot](#screenshot)
 - [Links](#links)
 - [Features](#features)
-- [Lighthouse Report](#Lighthouse-Report)
 - [Project Structure](#project-structure)
 - [API Integration](#api-integration)
 - [Installation](#installation)
-- [License](#license)
 - [Author](#author)
 
 ### Overview
@@ -28,13 +25,9 @@ This is a Weather Dashboard application designed to provide users with up-to-dat
 - ESLint and Prettier for code linting and formatting
 - Designed also by me
 
-### Screenshot
-
-![Weather Application](Screenshot.png)
-
 ### Links
 
-- Live Site URL : [Weather Application](https://weatheritoo.vercel.app/)
+- Live Site URL : [Weather Application](https://propacityweather.netlify.app/)
 
 ### Features
 
@@ -106,7 +99,7 @@ fetch(
 To set up and run the Weather Dashboard locally with an API key, follow these steps:
 
 ```bash
-git clone https://github.com/AbdelrahmanAlsayed/Weather-Application
+git clone https://github.com/akashcodes007/propacity-weather.git
 cd your-project-directory
 echo "REACT_APP_OPENWEATHERMAP_API_KEY=your-api-key-here" > .env
 npm install && npm run dev
