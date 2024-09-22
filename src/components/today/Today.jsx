@@ -3,9 +3,13 @@ import styles from "./Today.module.css";
 import windSpeed from "../../assets/windSpeed.png";
 
 function Today() {
-  const { forecastData } = useAppContext();
+  const { forecastData, isFahrenheit } = useAppContext();
   let todayAtArr = [];
 
+  // Function to convert Celsius to Fahrenheit
+  const convertToFahrenheit = (celsius) => (celsius * 9) / 5 + 32;
+
+  // Loop to get 8 data points (today's hourly forecast)
   for (let i = 0; i < 8; i++) {
     const forecastItem = forecastData?.list[i];
     const date = new Date(forecastItem?.dt * 1000);
@@ -34,6 +38,7 @@ function Today() {
     >
       <h2>Today at</h2>
       <div className={styles.sliderContainer}>
+        {/* Slider list for temperature */}
         <ul className={styles.sliderList} data-temp>
           {todayAtArr.map((item, index) => (
             <li className={styles.sliderItem} key={index}>
@@ -44,18 +49,25 @@ function Today() {
                 title={item.forecastItem?.weather[0].description}
                 loading="lazy"
               />
-              <p>{parseInt(item.forecastItem?.main.temp)} °C</p>
+              {/* Dynamically convert and display temperature in Fahrenheit or Celsius */}
+              <p>
+                {isFahrenheit
+                  ? `${Math.round(convertToFahrenheit(item.forecastItem?.main.temp))} °F`
+                  : `${Math.round(item.forecastItem?.main.temp)} °C`}
+              </p>
             </li>
           ))}
         </ul>
+
+        {/* Slider list for wind speed */}
         <ul className={styles.sliderList} data-temp>
           {todayAtArr.map((item, index) => (
             <li className={styles.sliderItem} key={index}>
               <p>{item.formattedTime}</p>
               <img
                 src={windSpeed}
-                alt="direction"
-                title="direction"
+                alt="Wind direction"
+                title="Wind direction"
                 loading="lazy"
                 style={{
                   transform: `rotate(${item.forecastItem?.wind.deg - 180}deg)`,

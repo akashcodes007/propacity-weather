@@ -1,6 +1,6 @@
 .hourlyForecast h2 {
   color: var(--main-text-color);
-  margin-top: 20px;
+  margin-top: 40px;
   padding: 0 10px;
   font-size: 20px;
 }

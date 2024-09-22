@@ -2,9 +2,13 @@ import { useAppContext } from "../../context/AppContext";
 import styles from "./Forecast.module.css";
 
 function Forecast() {
-  const { forecastData } = useAppContext();
+  const { forecastData, isFahrenheit } = useAppContext();
   let fiveDaysForecast = [];
 
+  // Function to convert Celsius to Fahrenheit
+  const convertToFahrenheit = (celsius) => (celsius * 9) / 5 + 32;
+
+  // Loop through forecast data and pick the forecast for 5 days
   for (let i = 7; i < forecastData?.list.length; i += 8) {
     const forecastItem = forecastData?.list[i];
     const date = new Date(forecastItem?.dt * 1000);
@@ -23,18 +27,23 @@ function Forecast() {
 
   return (
     <section className={styles.forecast} aria-label="forecast label">
-      <h2> 5 Days Forecast: </h2>
+      <h2>5 Days Forecast:</h2>
       <div className={styles.cardWrapper}>
         {fiveDaysForecast.map((item) => (
           <div className={styles.card} key={item.forecastItem.dt}>
             <img
               src={`https://openweathermap.org/img/wn/${item.forecastItem.weather[0].icon}@2x.png`}
-              alt="img"
+              alt="Weather icon"
               title={item.forecastItem.weather[0].description}
               className="weather-icon"
               loading="lazy"
             />
-            <span>{parseInt(item.forecastItem.main.temp_max)}°c</span>
+            {/* Dynamically display temperature in Celsius or Fahrenheit */}
+            <span>
+              {isFahrenheit
+                ? `${Math.round(convertToFahrenheit(item.forecastItem.main.temp_max))}°F`
+                : `${Math.round(item.forecastItem.main.temp_max)}°C`}
+            </span>
             <p className={styles.label}>{item.formattedDate}</p>
             <p className={styles.label}>{item.dayName}</p>
           </div>

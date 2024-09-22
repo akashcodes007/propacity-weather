@@ -76,7 +76,7 @@ function Header() {
     <header id="header" className={`${styles.header} container`}>
       <a href="#" className={styles.logo}>
         <img src={logoImg} alt="logo" className={styles.image} />
-        <h1 className={styles.heading}>Weatherito</h1>
+        <h1 className={styles.heading}>Propacity Weather</h1>
       </a>
       <div
         className={`${styles.searchView} ${isSearchOpen ? styles.open : ""}`}

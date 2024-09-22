@@ -6,14 +6,18 @@ import { IoMoonOutline } from "react-icons/io5";
 import { useAppContext } from "../../context/AppContext";
 
 function Highlights() {
-  const { currentWeatherData } = useAppContext();
+  const { currentWeatherData, isFahrenheit } = useAppContext();
 
+  // Function to convert Celsius to Fahrenheit
+  const convertToFahrenheit = (celsius) => (celsius * 9) / 5 + 32;
+
+  // Function to format time (Sunrise, Sunset) based on timezone
   function formatTime(timeUnix, timezone) {
     const date = new Date((timeUnix + timezone) * 1000);
     const hours = date.getUTCHours();
     const minutes = date.getUTCMinutes();
     const amPm = hours >= 12 ? "PM" : "AM";
-    return `${hours % 12 || 12}:${minutes} ${amPm}`;
+    return `${hours % 12 || 12}:${minutes.toString().padStart(2, "0")} ${amPm}`;
   }
 
   return (
@@ -30,7 +34,7 @@ function Highlights() {
               <p>
                 {formatTime(
                   currentWeatherData?.sys.sunrise,
-                  currentWeatherData?.timezone,
+                  currentWeatherData?.timezone
                 )}
               </p>
             </div>
@@ -42,7 +46,7 @@ function Highlights() {
               <p>
                 {formatTime(
                   currentWeatherData?.sys.sunset,
-                  currentWeatherData?.timezone,
+                  currentWeatherData?.timezone
                 )}
               </p>
             </div>
@@ -60,7 +64,7 @@ function Highlights() {
             </div>
           </div>
           <div className={styles.box}>
-            <h3>pressure</h3>
+            <h3>Pressure</h3>
             <div className={styles.bottom}>
               <FaWater />
               <p>
@@ -74,8 +78,8 @@ function Highlights() {
             <div className={styles.bottom}>
               <MdOutlineVisibility />
               <p>
-                {currentWeatherData?.visibility / 1000}
-                <small>km</small>
+                {(currentWeatherData?.visibility / 1000).toFixed(1)}
+                <small> km</small>
               </p>
             </div>
           </div>
@@ -83,7 +87,12 @@ function Highlights() {
             <h3>Feels Like</h3>
             <div className={styles.bottom}>
               <FaTemperatureLow />
-              <p>{currentWeatherData?.main.feels_like.toFixed(1)}°c</p>
+              <p>
+                {/* Dynamically convert and display 'Feels Like' temperature in Fahrenheit or Celsius */}
+                {isFahrenheit
+                  ? `${convertToFahrenheit(currentWeatherData?.main.feels_like).toFixed(1)} °F`
+                  : `${currentWeatherData?.main.feels_like.toFixed(1)} °C`}
+              </p>
             </div>
           </div>
         </div>
